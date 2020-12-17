@@ -5,10 +5,18 @@
 replicaCount: 1
 
 image:
-  repository: vulnerables/cve-2014-6271
+  #repository: vulnerables/cve-2014-6271
+  repository: yonatanph/logicdemo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
+
+metasploit:
+  repository: metasploitframework/metasploit-framework
+  pullPolicy: IfNotPresent
+  tag: latest
+  selector: metasploit
+  port: 4444
 
 imagePullSecrets: []
 nameOverride: ""

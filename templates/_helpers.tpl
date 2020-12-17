@@ -49,6 +49,10 @@ Selector labels
 app.kubernetes.io/name: {{ include "cpx-helm-vulnerable.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+{{- define "metasploit-client.labels" -}}
+client: metasploit
+purpose: demo
+{{- end}}
 
 {{/*
 Create the name of the service account to use
