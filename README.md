@@ -1,5 +1,13 @@
 # CPX 2021 demo
 
+<!-- vim-markdown-toc GFM -->
+
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Demo](#demo)
+* [Tips](#tips)
+
+<!-- vim-markdown-toc -->
 # Requirements
 
 - [Helm3](https://helm.sh/)
