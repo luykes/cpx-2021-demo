@@ -1,13 +1,14 @@
 # CPX 2021 demo
-
 <!-- vim-markdown-toc GFM -->
 
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Demo](#demo)
+* [Cleanup](#cleanup)
 * [Tips](#tips)
 
 <!-- vim-markdown-toc -->
+
 # Requirements
 
 - [Helm3](https://helm.sh/)
@@ -17,7 +18,10 @@
 # Installation
 > Make sure you are using Helm3 client
 ```bash
-helm install --namespace vulnerable --create-namespace -f values.yaml vuln-app .
+# Install our sushi restaurant web page
+helm install -f cpx-sushi/values.yaml --namespace sushi --create-namespace sushi-restaurant cpx-sushi
+# Install the attacker client
+helm install -f attacker-cpx/values.yaml --namespace attacker --create-namespace attacker-client attacker-cpx
 # Ignore the stdout printed by helm
 ```
 
@@ -71,6 +75,11 @@ sessions -i 1
 # Start running commands
 whoami
 ls -la
+```
+#Cleanup
+```bash
+helm uninstall sushi-restaurant -n sushi
+helm uninstall attacker-client -n attacker
 ```
 
 # Tips

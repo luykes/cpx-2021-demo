@@ -1,14 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: metasploit-client
+  name: {{ include "cpx-sushi.fullname" . }}
   labels:
-    {{- include "cpx-helm-vulnerable.labels" . | nindent 4 }}
+    {{- include "cpx-sushi.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
   selector:
     matchLabels:
-      {{- include "metasploit-client.labels" . | nindent 6 }}
+      {{- include "cpx-sushi.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -16,27 +18,33 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "metasploit-client.labels" . | nindent 8 }}
+        {{- include "cpx-sushi.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "cpx-helm-vulnerable.serviceAccountName" . }}
+      serviceAccountName: {{ include "cpx-sushi.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.metasploit.repository }}:{{ .Values.metasploit.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.metasploit.pullPolicy }}
-          command: [ "/bin/bash", "-c", "--" ]
-          args: [ "while true; do sleep 30; done;" ]
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.metasploit.port }}
+              containerPort: 80
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

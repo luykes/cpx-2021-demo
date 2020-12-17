@@ -1,0 +1,4 @@
+1. You have successfully deployed attacker application. Run the following command within the container
+to start metasploit framework
+
+>$ ./msfconsole -r docker/msfconsole.rc -y $APP_HOME/config/database.yml

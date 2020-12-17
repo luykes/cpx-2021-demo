@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cpx-sushi
+description: CPX sushi restaurant web page
+type: application
+version: 0.1.0
+appVersion: 1.16.0

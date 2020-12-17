@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cpx-helm-vulnerable.fullname" . }}
+  name: {{ include "cpx-sushi.fullname" . }}
   labels:
-    {{- include "cpx-helm-vulnerable.labels" . | nindent 4 }}
+    {{- include "cpx-sushi.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "cpx-helm-vulnerable.selectorLabels" . | nindent 4 }}
+    {{- include "cpx-sushi.selectorLabels" . | nindent 4 }}
